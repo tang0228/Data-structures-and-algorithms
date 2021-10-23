@@ -1,0 +1,110 @@
+<script>
+    function Node(value) {
+        this.value = value;
+        this.next = null;
+    }
+
+    const a = new Node('a');
+    const b = new Node('b');
+    const c = new Node('c');
+    const d = new Node('d');
+    a.next = b;
+    b.next = c;
+    c.next = d;
+
+    // 打印整个链表
+    function print(node) {
+        if (!node) {
+            return;
+        }
+        console.log(node.value);
+        print(node.next);
+    }
+
+    function print(node) {
+        let temp = node;
+        while (true) {
+            if (temp != null) {
+                console.log(temp.value);
+            } else {
+                break;
+            }
+            temp = temp.next;
+        }
+    }
+
+    // 获取链表的长度
+    function getLength(node) {
+        if (!node) {
+            return 0;
+        }
+        return 1 + getLength(node.next);
+    }
+
+    // 通过下标获取链表的某个数据
+    function getValue(node, index) {
+        function _getValue(curNode, curIndex) {
+            if (curIndex === index) {
+                return curNode.value;
+            } else if (!curNode) {
+                return null;
+            } else {
+                return _getValue(curNode.next, curIndex + 1);
+            }
+        }
+        return _getValue(node, 0);
+    }
+
+    // 通过下标设置链表的某个数据
+    function setValue(node, index, newValue) {
+        function _setValue(curNode, curIndex) {
+            if (curIndex === index) {
+                curNode.value = newValue;
+            } else if (!curNode) {
+                return null;
+            } else {
+                _setValue(curNode.next, curIndex + 1);
+            }
+        }
+        return _setValue(node, 0);
+    }
+
+    // 在链表末尾加入一个新节点
+    function add(node, newValue) {
+        if (!node.next) {
+            const newNode = new Node(newValue);
+            node.next = newNode;
+            return;
+        }
+        add(node.next, newValue);
+    }
+
+    // 在一个链表的某一节点后加入一个新节点
+    function insert(node, insertValue, newValue) {
+        if (!node.next) {
+            // 到最后也没有找到
+            const newNode = new Node(newValue);
+            node.next = newNode;
+        } else if (node.value === insertValue) {
+            const newNode = new Node(newValue);
+            newNode.next = node.next;
+            node.next = newNode;
+        } else {
+            insert(node.next, insertValue, newValue);
+        }
+    }
+
+    // 删除指定值的节点
+    function remove(node, value) {
+        if (!node) {
+            return null;
+        }
+        if (node.value === value) {
+            // 找到了该值的节点
+            return node.next;
+        } else {
+            node.next = remove(node.next, value);
+            return node;
+        }
+    }
+</script>

@@ -1,0 +1,54 @@
+<script>
+    var arr = [8, 5, 9, 6, 10, 7, 0];
+
+    function swap(arr, i, j) {
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // 选择排序
+    function selectSort(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            var min = Infinity;
+            var index;
+            for (var j = i; j < arr.length; j++) {
+                if (arr[j] < min) {
+                    min = arr[j];
+                    index = j;
+                }
+            }
+            swap(arr, i, index);
+        }
+    }
+
+    // 冒泡排序
+    function bubbleSort(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+    function quickSort(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+        let basic = arr.pop();
+        let right = [];
+        let left = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] < basic) {
+                left.push(arr[i]);
+            } else {
+                right.push(arr[i]);
+            }
+        }
+        return quickSort(left).concat([basic], quickSort(right));
+    }
+    
+    console.log(quickSort(arr));
+</script>
